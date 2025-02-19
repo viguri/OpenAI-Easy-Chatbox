@@ -11,9 +11,11 @@ def home():
 def send_message():
     try:
         user_message = request.form['message']
+        # Convert form data to JSON for the API request
         response = requests.post(
             'http://127.0.0.1:5000/chat',
-            json={'message': user_message},
+            headers={'Content-Type': 'application/json'},
+            json={"message": user_message},
             timeout=30  # Add timeout
         )
         # Check if the response is successful
@@ -30,4 +32,4 @@ def send_message():
         return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    app.run(port=5001, debug=True)
+    app.run(host='127.0.0.1', port=5001, debug=True)

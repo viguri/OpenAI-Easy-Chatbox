@@ -1,20 +1,17 @@
 # curl -X POST http://127.0.0.1:5000/chat -H "Content-Type: application/json" -d '{"message": "Hello, world!"}'
 from flask import Flask, request, jsonify 
 import os
-import openai 
-from openai import OpenAIError 
-from openai import OpenAI
+from openai import OpenAI, OpenAIError
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
-client = OpenAI()
-
-# Set OpenAI API key
-openai.api_key = os.getenv('OPENAI_API_KEY')
-if not openai.api_key:
+api_key = os.getenv('OPENAI_API_KEY')
+if not api_key:
     raise RuntimeError("OPENAI_API_KEY not found in environment variables")
+
+client = OpenAI(api_key=api_key)
 
 app = Flask(__name__)
 
